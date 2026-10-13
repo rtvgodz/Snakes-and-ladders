@@ -25,7 +25,9 @@ die; landing on a marked ladder moves a pawn up to its top, while landing on a
 marked snake moves it down to its tail. The first player to reach square 100
 wins. Pawns hop across each square they move, animate up ladders and down
 snakes, and play synthesized sound effects for each move. Motion is disabled
-when the device's reduced-motion preference is enabled.
+when the device's reduced-motion preference is enabled. The winner is announced
+in a full-screen dialog with a **New game** button that resets the board and
+unlocks player setup.
 
 ## Project structure
 

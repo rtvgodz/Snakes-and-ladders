@@ -9,6 +9,9 @@ const statusElement = document.querySelector(".controls__status");
 const diceFaceElement = document.querySelector("#dice-face");
 const diceResultElement = document.querySelector("#dice-result");
 const rollButton = document.querySelector("#roll-dice");
+const winnerDialog = document.querySelector("#winner-dialog");
+const winnerHeading = document.querySelector("#winner-heading");
+const newGameButton = document.querySelector("#new-game");
 
 if (
   !boardElement ||
@@ -19,7 +22,10 @@ if (
   !statusElement ||
   !diceFaceElement ||
   !diceResultElement ||
-  !rollButton
+  !rollButton ||
+  !(winnerDialog instanceof HTMLDialogElement) ||
+  !winnerHeading ||
+  !newGameButton
 ) {
   throw new Error("A required game setup element was not found.");
 }
@@ -286,6 +292,29 @@ function setSetupDisabled(disabled) {
   setupForm.querySelector(".start-button").disabled = disabled;
 }
 
+function resetGame() {
+  winnerDialog.close();
+  winnerHeading.textContent = "";
+  for (const cell of cellsBySquare.values()) {
+    cell.querySelector(".player-tokens")?.remove();
+  }
+  boardStartElement.querySelector(".player-tokens")?.remove();
+  boardElement.querySelector(".player-token--moving")?.remove();
+
+  players = [];
+  currentPlayerIndex = 0;
+  gameFinished = false;
+  setSetupDisabled(false);
+  rollButton.disabled = true;
+  diceFaceElement.dataset.value = "0";
+  diceFaceElement.setAttribute("aria-label", "Die has not been rolled");
+  diceResultElement.textContent = "No roll yet";
+  statusElement.textContent =
+    "Choose how many players, then enter each name and pawn color before starting.";
+}
+
+newGameButton.addEventListener("click", resetGame);
+
 function renderPlayers(hiddenPlayerIndex = -1) {
   for (const cell of cellsBySquare.values()) {
     cell.querySelector(".player-tokens")?.remove();
@@ -528,6 +557,8 @@ rollButton.addEventListener("click", async () => {
     gameFinished = true;
     statusElement.textContent =
       `${player.name} rolled ${roll}, moved from ${previousPosition === 0 ? "the start" : `square ${previousPosition}`} to square 100, and wins!`;
+    winnerHeading.textContent = `${player.name} wins!`;
+    winnerDialog.showModal();
     return;
   }
 

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A starter project for a Snakes and Ladders game."
+    />
+    <title>Snakes &amp; Ladders</title>
+    <link rel="stylesheet" href="./styles/main.css" />
+    <script type="module" src="./src/main.js"></script>
+  </head>
+  <body>
+    <main class="game">
+      <header class="game__header">
+        <p class="game__eyebrow">A classic board game</p>
+        <h1>Snakes <span>&amp;</span> Ladders</h1>
+      </header>
+
+      <div class="game__layout">
+        <section class="board-panel" aria-labelledby="board-heading">
+          <h2 id="board-heading" class="visually-hidden">Game board</h2>
+          <div
+            id="game-board"
+            class="board"
+            role="grid"
+            aria-label="Snakes and Ladders board"
+          ></div>
+          <div
+            id="board-start"
+            class="board-start"
+            role="group"
+            aria-label="Starting position, square zero"
+          >
+            <span class="board-start__label">Start <span>(0)</span></span>
+          </div>
+        </section>
+
+        <aside class="controls" aria-labelledby="controls-heading">
+          <h2 id="controls-heading">Player setup</h2>
+          <p class="controls__status" aria-live="polite">
+            Choose how many players, then enter each name and pawn color before
+            starting.
+          </p>
+          <form id="player-setup" class="player-setup">
+            <label class="player-setup__count-label" for="player-count">
+              Number of players
+            </label>
+            <select id="player-count" name="player-count">
+              <option value="2">2 players</option>
+              <option value="3">3 players</option>
+              <option value="4">4 players</option>
+            </select>
+            <div id="player-colors" class="player-colors"></div>
+            <button class="start-button" type="submit">Start game</button>
+          </form>
+          <section class="dice-controls" aria-label="Dice and turn">
+            <div
+              id="dice-face"
+              class="dice-face"
+              data-value="0"
+              role="img"
+              aria-label="Die has not been rolled"
+            >
+              <span></span><span></span><span></span>
+              <span></span><span></span><span></span>
+              <span></span><span></span><span></span>
+            </div>
+            <p id="dice-result" class="dice-result" aria-live="polite">
+              No roll yet
+            </p>
+            <button id="roll-dice" class="roll-button" type="button" disabled>
+              Roll the dice
+            </button>
+          </section>
+        </aside>
+      </div>
+    </main>
+  </body>
+</html>

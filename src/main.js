@@ -540,12 +540,23 @@ rollButton.addEventListener("click", async () => {
   const player = players[playerIndex];
   const roll = Math.floor(Math.random() * 6) + 1;
   const previousPosition = player.position;
-  const landedPosition = Math.min(previousPosition + roll, 100);
-  const transition = transitionsByStart.get(landedPosition);
-  playSound("jump");
+  const landedPosition = previousPosition + roll;
   diceFaceElement.dataset.value = String(roll);
   diceFaceElement.setAttribute("aria-label", `Die rolled ${roll}`);
   diceResultElement.textContent = `Rolled a ${roll}`;
+
+  if (landedPosition > 100) {
+    currentPlayerIndex = (playerIndex + 1) % players.length;
+    const stepsToWin = 100 - previousPosition;
+    statusElement.textContent =
+      `${player.name} rolled ${roll} but needs exactly ${stepsToWin} to reach 100. ${player.name} stays on square ${previousPosition}. ${players[currentPlayerIndex].name}'s turn.`;
+    renderPlayers();
+    rollButton.disabled = false;
+    return;
+  }
+
+  const transition = transitionsByStart.get(landedPosition);
+  playSound("jump");
   renderPlayers(playerIndex);
   statusElement.textContent =
     `${player.name} rolled ${roll} and is moving from ${previousPosition === 0 ? "the start" : `square ${previousPosition}`} to square ${landedPosition}${transition ? `, then along the ${transition.type}` : ""}.`;

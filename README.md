@@ -23,7 +23,8 @@ name is shown after every turn. On a player's first roll their pawn moves from
 position 0 by the number rolled. Players then take turns rolling one six-sided
 die; landing on a marked ladder moves a pawn up to its top, while landing on a
 marked snake moves it down to its tail. The first player to reach square 100
-wins. Pawns hop across each square they move, animate up ladders and down
+wins by rolling the exact number needed to land on 100; a roll that would pass
+100 leaves the pawn in place. Pawns hop across each square they move, animate up ladders and down
 snakes, and play synthesized sound effects for each move. Motion is disabled
 when the device's reduced-motion preference is enabled. The winner is announced
 in a full-screen dialog with a **New game** button that resets the board and
